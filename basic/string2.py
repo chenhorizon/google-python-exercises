@@ -54,14 +54,12 @@ def not_bad(s):
 #  a-front + b-front + a-back + b-back
 def front_back(a, b):
   # +++your code here+++
-  a_front = get_halve_string(a)[0]
-  a_back  = get_halve_string(a)[1]
-  b_front = get_halve_string(b)[0]
-  b_back  = get_halve_string(b)[1]
+  a_front, a_back = get_halve_string(a)
+  b_front, b_back = get_halve_string(b)
 
   return a_front + b_front + a_back + b_back
 
-def get_halve_string(s: str) -> [str, str]:
+def get_halve_string(s: str) -> tuple[str, str]:
     s_len = len(s)
     if s_len == 0:
         return ['', '']
@@ -72,7 +70,7 @@ def get_halve_string(s: str) -> [str, str]:
     else:
         mid_index = (s_len + 1) // 2
 
-    return [ s[0:mid_index], s[mid_index:] ]
+    return s[0:mid_index], s[mid_index:]
 
 # Simple provided test() function used in main() to print
 # what each function returns vs. what it's supposed to return.
