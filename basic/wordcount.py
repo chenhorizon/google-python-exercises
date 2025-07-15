@@ -45,6 +45,52 @@ import sys
 # and builds and returns a word/count dict for it.
 # Then print_words() and print_top() can just call the utility function.
 
+def print_words(f_path: str) -> {}:
+    ret = {}
+
+    f_content = read_file(f_path)
+    word_list = f_content.split()
+    for x in word_list:
+        x = x.lower()
+        if x in ret:
+            ret[x] += 1
+        else:
+            ret[x] = 1
+
+    for x in sorted(ret.keys()):
+        print(f"{x} {ret[x]}")
+
+    return ret
+
+def print_top(f_path: str) -> {}:
+    ret = {}
+    num_to_print = 20
+
+    f_content = read_file(f_path)
+    word_list = f_content.split()
+    for x in word_list:
+        x = x.lower()
+        if x in ret:
+            ret[x] += 1
+        else:
+            ret[x] = 1
+
+    for word, word_cnt in sorted(ret.items(), key=lambda item:item[1], reverse=True)[0:num_to_print]:
+        print(f"{word} {word_cnt}")
+
+    return ret
+
+def read_file(f_path: str):
+    try:
+        with open(f_path, 'r', encoding='utf-8') as f:
+            return f.read()
+    except FileNotFoundError:
+        print(f"Error: the file '{f_path}' was not found.")
+        return None
+    except Exception as e:
+        print(f"Error: an unexpected error occurred, {e}")
+        return None
+
 ###
 
 # This basic command line argument parsing code is provided and
