@@ -49,6 +49,9 @@ def print_words(f_path: str) -> {}:
     ret = {}
 
     f_content = read_file(f_path)
+    if f_content == None:
+        return ret
+
     word_list = f_content.split()
     for x in word_list:
         x = x.lower()
@@ -57,6 +60,7 @@ def print_words(f_path: str) -> {}:
         else:
             ret[x] = 1
 
+    # for x in sorted(ret):
     for x in sorted(ret.keys()):
         print(f"{x} {ret[x]}")
 
@@ -67,6 +71,9 @@ def print_top(f_path: str) -> {}:
     num_to_print = 20
 
     f_content = read_file(f_path)
+    if f_content == None:
+        return ret
+
     word_list = f_content.split()
     for x in word_list:
         x = x.lower()
@@ -80,7 +87,7 @@ def print_top(f_path: str) -> {}:
 
     return ret
 
-def read_file(f_path: str):
+def read_file(f_path: str) -> str:
     try:
         with open(f_path, 'r', encoding='utf-8') as f:
             return f.read()
