@@ -45,17 +45,50 @@ import random
 import sys
 
 
-def mimic_dict(filename):
+def mimic_dict(filename) -> dict:
   """Returns mimic dict mapping each word to list of words which follow it."""
   # +++your code here+++
-  return
+  word_dict = {}
+
+  f_content = read_file(filename)
+  if f_content == None:
+      return {}
+
+  word_list = f_content.split()
+  if len(word_list) < 1:
+      return {}
+  
+  word_dict[''] = [word_list[0]]
+  for i in range(0, len(word_list)-1):
+    if word_list[i] in word_dict:
+        word_dict[word_list[i]].append(word_list[i+1])
+    else:
+        word_dict[word_list[i]] = [word_list[i+1]]
+  word_dict[word_list[-1]] = ['']
+
+  return word_dict
 
 
 def print_mimic(mimic_dict, word):
   """Given mimic dict and start word, prints 200 random words."""
   # +++your code here+++
-  return
+  print(word, end=' ')
+  for i in range(200):
+      word = random.choice(mimic_dict[word])
+      print(word, end=' ')
 
+  return None
+
+def read_file(f_path: str) -> str:
+    try:
+        with open(f_path, 'r', encoding='utf-8') as f:
+            return f.read()
+    except FileNotFoundError:
+        print(f"Error: file '{f_path}' was not found.")
+        return None
+    except Exception as e:
+        print(f"Error: an unexpected exception occurred, {e}")
+        return None
 
 # Provided main(), calls mimic_dict() and mimic()
 def main():
@@ -63,8 +96,8 @@ def main():
     print('usage: ./mimic.py file-to-read')
     sys.exit(1)
 
-  dict = mimic_dict(sys.argv[1])
-  print_mimic(dict, '')
+  m_dict = mimic_dict(sys.argv[1])
+  print_mimic(m_dict, '')
 
 
 if __name__ == '__main__':
