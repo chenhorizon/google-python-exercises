@@ -45,7 +45,7 @@ import sys
 # and builds and returns a word/count dict for it.
 # Then print_words() and print_top() can just call the utility function.
 
-def print_words(f_path: str) -> {}:
+def print_words(f_path: str) -> dict:
     ret = {}
 
     f_content = read_file(f_path)
@@ -66,7 +66,7 @@ def print_words(f_path: str) -> {}:
 
     return ret
 
-def print_top(f_path: str) -> {}:
+def print_top(f_path: str) -> dict:
     ret = {}
     num_to_print = 20
 
