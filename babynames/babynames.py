@@ -41,7 +41,19 @@ def extract_names(filename):
   ['2006', 'Aaliyah 91', Aaron 57', 'Abagail 895', ' ...]
   """
   # +++your code here+++
+
   return
+
+def read_file(f_path: str) -> str:
+    try:
+        with open(f_path, 'r', encoding='utf-8') as f:
+            return f.read()
+    except FileNotFoundError:
+        print(f"Error: file {f_path} was not found.")
+        return None
+    except Exception:
+        print(f"Error: an unexpected error occurred, {e}")
+        return None
 
 
 def main():
