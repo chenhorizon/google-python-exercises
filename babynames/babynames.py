@@ -45,8 +45,13 @@ def extract_names(filename):
   if f_content == None:
       return None
 
-  y = re.search(r'Popularity in (\d*)', f_content).group(1)
-  print(y)
+  year_match = re.search(r'Popularity in (\d*)', f_content)
+  if not year_match:
+      print(f"Notice: no information of year in the file, {filename}")
+      return None
+
+  year = year_match.group(1)
+  print(f"year: {year}")
 
   return
 
