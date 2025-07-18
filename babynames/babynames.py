@@ -34,7 +34,7 @@ Suggested milestones for incremental development:
  -Fix main() to use the extract_names list
 """
 
-def extract_names(filename):
+def extract_names(filename) -> list:
   """
   Given a file name for baby.html, returns a list starting with the year string
   followed by the name-rank strings in alphabetical order.
@@ -49,11 +49,19 @@ def extract_names(filename):
   if not year_match:
       print(f"Notice: no information of year in the file, {filename}")
       return None
-
   year = year_match.group(1)
-  print(f"year: {year}")
 
-  return
+  rank_names_match = re.findall(r'<td>(\d+)</td><td>(\w+)</td><td>(\w+)</td>', f_content)
+  if not rank_names_match:
+      print(f"Notice: no rank and name was found in the file, {filename}")
+      return None
+  y_list = []
+  for rank_names in rank_names_match:
+      y_list.append(f"{rank_names[1]} {rank_names[0]}")
+      y_list.append(f"{rank_names[2]} {rank_names[0]}")
+  y_list.sort()
+
+  return [year] + y_list
 
 def read_file(f_path: str) -> str:
     try:
@@ -87,8 +95,9 @@ def main():
   # For each filename, get the names, then either print the text output
   # or write it to a summary file
   for f in args:
-      print(f)
-      extract_names(f)
+      y_list = extract_names(f)
+      for y in y_list:
+          print(y)
 
 if __name__ == '__main__':
   main()
