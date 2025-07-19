@@ -43,18 +43,18 @@ def extract_names(filename) -> list:
   # +++your code here+++
   f_content = read_file(filename)
   if f_content == None:
-      return None
+      return []
 
   year_match = re.search(r'Popularity in (\d*)', f_content)
   if not year_match:
       print(f"Notice: no information of year in the file, {filename}")
-      return None
+      return []
   year = year_match.group(1)
 
   rank_names_match = re.findall(r'<td>(\d+)</td><td>(\w+)</td><td>(\w+)</td>', f_content)
   if not rank_names_match:
       print(f"Notice: no rank and name was found in the file, {filename}")
-      return None
+      return []
   y_list = []
   for rank_names in rank_names_match:
       y_list.append(f"{rank_names[1]} {rank_names[0]}")
