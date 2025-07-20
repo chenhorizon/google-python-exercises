@@ -19,13 +19,32 @@ Here's what a puzzle url looks like:
 """
 
 
-def read_urls(filename):
+def read_urls(filename: str) -> []:
   """Returns a list of the puzzle urls from the given log file,
   extracting the hostname from the filename itself.
   Screens out duplicate urls and returns the urls sorted into
   increasing order."""
   # +++your code here+++
-  
+
+  # file exists
+  if not os.path.exists(filename):
+      print(f"Error: file {filename} does not exists.")
+      return []
+
+  # read & extract url from the given file line by line
+  url_list = []
+  try:
+      with open(filename, 'r', encoding='utf-8') as f:
+          for line in f:
+              url_matched = re.search(r'GET (\S+\.jpg)', line)
+              if url_matched:
+                  url_list.append(url_matched.group(1))
+      return url_list
+  except Exception as e:
+      print(f"Error: exception {e} occurred.")
+      return []
+
+  # sort and return
 
 def download_images(img_urls, dest_dir):
   """Given the urls already in the correct order, downloads
