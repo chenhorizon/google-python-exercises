@@ -31,15 +31,18 @@ def read_urls(filename: str) -> []:
       print(f"Error: file {filename} does not exists.")
       return []
 
+  url_prefix = "http://" + filename
+
   # read & extract url from the given file line by line
-  url_list = []
+  url_dict = {}
   try:
       with open(filename, 'r', encoding='utf-8') as f:
           for line in f:
               url_matched = re.search(r'GET (\S+\.jpg)', line)
               if url_matched:
-                  url_list.append(url_matched.group(1))
-      return url_list
+                  url_dict[url_prefix + url_matched.group(1)] = 1
+
+      return sorted(url_dict.keys())
   except Exception as e:
       print(f"Error: exception {e} occurred.")
       return []
