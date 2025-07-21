@@ -31,7 +31,8 @@ def read_urls(filename: str) -> []:
       print(f"Error: file {filename} does not exists.")
       return []
 
-  url_prefix = "http://" + filename
+  domine = filename[filename.index('_')+1:]
+  url_prefix = "http://" + domine
 
   # read & extract url from the given file line by line
   url_dict = {}
