@@ -9,7 +9,7 @@
 import os
 import re
 import sys
-import urllib
+import urllib.request
 
 """Logpuzzle exercise
 Given an apache logfile, find the puzzle urls and download the images.
@@ -59,6 +59,23 @@ def download_images(img_urls, dest_dir):
   Creates the directory if necessary.
   """
   # +++your code here+++
+  if not os.path.exists(dest_dir):
+      os.mkdir(dest_dir)
+
+  i = 0
+  page_content = "<html><body>"
+  for img in img_urls:
+      img_name = "img%d" % i
+      i = i + 1
+
+      print(f"Notice: fetching img {img_name}")
+      urllib.request.urlretrieve(img, os.path.join(dest_dir, img_name))
+      page_content += "<img src='{img_name}' />"
+
+  page_content += "</body></html>"
+
+  with open(os.path.join(dest_dir, 'index.html'), 'w') as f:
+      f.write(page_content)
 
 
 def main():
