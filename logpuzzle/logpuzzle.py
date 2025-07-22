@@ -31,6 +31,7 @@ def read_urls(filename: str) -> []:
       print(f"Error: file {filename} does not exists.")
       return []
 
+  print(f"filename: {filename}")
   domine = filename[filename.index('_')+1:]
   url_prefix = "http://" + domine
 
@@ -65,12 +66,12 @@ def download_images(img_urls, dest_dir):
   i = 0
   page_content = "<html><body>"
   for img in img_urls:
-      img_name = "img%d" % i
+      img_name = "img%d" % i + img[img.rindex('.'):]
       i = i + 1
 
       print(f"Notice: fetching img {img_name}")
       urllib.request.urlretrieve(img, os.path.join(dest_dir, img_name))
-      page_content += "<img src='{img_name}' />"
+      page_content += f"<img src='{img_name}' />"
 
   page_content += "</body></html>"
 
